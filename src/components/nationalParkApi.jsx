@@ -1,34 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export default function NationalParkApi() {
+export default function NationalParkApi({ setParksData }) { // Renamed prop
     const [parks, setParks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [query, setQuery] = useState('california'); // Initial query value
-    const [submitQuery, setSubmitQuery] = useState('california'); // Query to be submitted
-    
+    const [query, setQuery] = useState('california'); // State for the input field
+    const [submittedQuery, setSubmittedQuery] = useState('california'); // State for the submitted query
+
     useEffect(() => {
         setLoading(true);
-        axios.get(`https://developer.nps.gov/api/v1/parks?q=${submitQuery}&api_key=${import.meta.env.VITE_NATIONAL_PARKS_API_KEY}`)
+        axios.get(`https://developer.nps.gov/api/v1/parks?q=${query}&api_key=${import.meta.env.VITE_NATIONAL_PARKS_API_KEY}`)
             .then(response => {
                 setParks(response.data.data);
+                setParksData(response.data.data); // Update parent state
                 setLoading(false);
             })
             .catch(error => {
                 setError(error);
                 setLoading(false);
             });
-    }, [submitQuery]); // Dependency on submitQuery
+    }, [submittedQuery, setParksData]); // Depend on submittedQuery
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setSubmitQuery(query); // Update submitQuery to trigger useEffect
+        setSubmittedQuery(query); // Update the submitted query on form submit
     };
 
     return (
         <div>
-            <h2>National Parks in CA</h2>
+            <h2>National Parks</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -44,7 +46,9 @@ export default function NationalParkApi() {
                 <div>
                     {parks.map(park => (
                         <div key={park.id}>
-                            <h1>{park.fullName}</h1>
+                            <h1>
+                                <Link to={`/parks/${park.id}`}>{park.fullName}</Link>
+                            </h1>
                             <p>{park.description}</p>
                             {park.images && park.images.length > 0 && (
                                 <img
