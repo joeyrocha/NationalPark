@@ -1,50 +1,58 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export default function NationalParkApi() {
-
-    // Make a request for a user with a given ID
-
-    const [parks, setParks] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
-
+export default function NationalParkApi({ setParksData }) { // Renamed prop
+    const [parks, setParks] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [query, setQuery] = useState('california'); // State for the input field
+    const [submittedQuery, setSubmittedQuery] = useState('california'); // State for the submitted query
 
     useEffect(() => {
-        // Make a request for a user with a given ID
-        axios.get(`https://developer.nps.gov/api/v1/parks?q=california&api_key=6kYXB4PMtxJQ4QH577h0sFJeM5kBu2BXgfWcX095`)
+        setLoading(true);
+        axios.get(`https://developer.nps.gov/api/v1/parks?q=${query}&api_key=${import.meta.env.VITE_NATIONAL_PARKS_API_KEY}`)
             .then(response => {
-                // handle success
                 setParks(response.data.data);
-                console.log(response)
-                setLoading(false)
+                setParksData(response.data.data); // Update parent state
+                setLoading(false);
             })
             .catch(error => {
-                // handle error
-                console.log("eeror fetching and parsing data", error);
-                setError(error)
-                setLoading(false)
-            })
-            .finally(function () {
-                // always executed
+                setError(error);
+                setLoading(false);
             });
+    }, [submittedQuery, setParksData]); // Depend on submittedQuery
 
-    }, []);//
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setSubmittedQuery(query); // Update the submitted query on form submit
+    };
 
     return (
         <div>
-            <h2>National Parks in CA</h2>
+            <h2>National Parks</h2>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search parks by state"
+                />
+                <button type="submit">Search</button>
+            </form>
             {loading && <p>Loading parks data...</p>}
             {error && <p>Error fetching parks data: {error.message}</p>}
             {parks.length > 0 && (
                 <div>
                     {parks.map(park => (
                         <div key={park.id}>
-                            <h1>{park.fullName}</h1>
+                            <h1>
+                                <Link to={`/parks/${park.id}`}>{park.fullName}</Link>
+                            </h1>
                             <p>{park.description}</p>
                             {park.images && park.images.length > 0 && (
                                 <img
-                                    src={park.images[0].url}  // Display only the first image
+                                    src={park.images[0].url}
                                     alt={park.images[0].altText}
                                     title={park.images[0].title}
                                 />
