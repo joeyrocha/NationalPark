@@ -2,6 +2,172 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Lexend', sans-serif;
+  text-decoration: none;
+  color: inherit;
+  
+}
+
+/* Navbar.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: #333; /* Navbar background color */
+}
+
+.logo-container {
+  flex: 1; /* Take remaining space */
 }
 
 
+.nav-svg svg{
+  max-width: 3vh;
+  height: auto;
+  fill: forestgreen;
+}
+.nav-svg svg:hover{
+  fill: limegreen;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px; /* Adjust gap as needed */
+}
+
+.nav-links li {
+  color: #fff; /* Link color */
+}
+
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: flex-start; /* Align items to the start on small screens */
+  }
+
+  .nav-links {
+    margin-top: 10px; /* Add space between logo and links on small screens */
+  }
+}
+
+
+
+
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.search-input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 300px; /* Adjust the width as needed */
+}
+
+.submit-button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+.park-header{
+  text-align: center;
+  background-color: #45a049;
+}
+
+.results-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.search-result-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 15px;
+  width: 300px; /* Adjust the width as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.state-park-name {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  
+}
+
+.state-park-name:hover{
+  color: #45a049;
+}
+
+.park-description {
+  margin-bottom: 15px;
+}
+
+.park-pics {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ParkDetail.css (or your preferred naming convention) */
+
+.parkdetail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.parkdetail-name {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.parkdetail-description {
+  margin-bottom: 20px;
+}
+
+.park-activities {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.park-activity {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.park-images {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.park-image img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

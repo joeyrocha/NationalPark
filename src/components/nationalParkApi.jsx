@@ -30,28 +30,29 @@ export default function NationalParkApi({ setParksData }) { // Renamed prop
 
     return (
         <div>
-            <h2>National Parks</h2>
             <form onSubmit={handleSubmit}>
                 <input
+                    className='search-input'
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search parks by state"
                 />
-                <button type="submit">Search</button>
+                <button className='submit-button' type="submit">Search</button>
             </form>
             {loading && <p>Loading parks data...</p>}
             {error && <p>Error fetching parks data: {error.message}</p>}
             {parks.length > 0 && (
-                <div>
+                <div className='results-container'>
                     {parks.map(park => (
-                        <div key={park.id}>
-                            <h1>
+                        <div className='search-result-container' key={park.id}>
+                            <h1 className='state-park-name'>
                                 <Link to={`/parks/${park.id}`}>{park.fullName}</Link>
                             </h1>
-                            <p>{park.description}</p>
+                            <p className='park-description'>{park.description}</p>
                             {park.images && park.images.length > 0 && (
                                 <img
+                                    className='park-pics'
                                     src={park.images[0].url}
                                     alt={park.images[0].altText}
                                     title={park.images[0].title}

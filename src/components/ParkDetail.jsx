@@ -11,18 +11,25 @@ const ParkDetail = ({ parks }) => {
         return <div>Park not found</div>;
     }
 
+    const limitedActivities = park.activities.slice(0, 5);
+
     return (
         <div>
-            <h1>{park.fullName}</h1>
-            <p>{park.description}</p>
-            <ul>
-                {park.activities.map(activity => (
-                    <li key={activity.id}>{activity.name}</li>
+            <h1 className='parkdetail-name'>{park.fullName}</h1>
+            <p className='parkdetail-description'>{park.description}</p>
+
+            
+            
+            <ul className='park-activities'>
+                {limitedActivities.map(activity => (
+                    <li className='park-activity' key={activity.id}>{activity.name}</li>
                 ))}
             </ul>
-            <ul>
+            <ul className='park-images'>
                 {park.images.map(image => (
-                    <li key={image.id}>
+                    <li 
+                        className='park-image'
+                        key={image.id}>
                         <img src={image.url} alt={image.title} />
                     </li>
                 ))}
